@@ -1,20 +1,35 @@
+#Indica el puerto en el que se levantara el servidor 
+#Este es el puerto que utilizan por defecto muchos microservicios cliente para buscar su configuración
 server:
   port: 8888
 
+#Defiene el nomnbre del microservicio como config-server
+#Este nombre se usa en Eureka para que otros servicios lo identifiquen
 spring:
   application:
     name: config-server
+  #Indica que el perfil activo esta en native
+  #El perfil native le dice al servidor de configuración que cargue los archivos de configuración desde una carpeta local
+  profiles:
+    active: native
+  #Aquí se indica la ruta local donde el servidor de configuración debe buscar los archivos .yml o .properties de los micro
+  #En este caso apunto a una configuración local de mi laptop
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/RodriguezF-JuanSebastian/sistema-educativo-microservicios.git
+        native:
+          search-locations: file:///C:/Users/monos/Documents/Sebastian/Asignaturas/38.Lenguaje_Programación_Avanzado_II/Unidad_I/Parcial2/config-repo
+          #Parametro utilizado cuando el respositorio es Git
+          #main indica la rama por defecro del repositorio Git que usara para obtener las configuraciones
           default-label: main
+          #si se utiliza Git en vez de native, esto indica que se dbe clonar el repositorio al iniciar el sevidor
           clone-on-start: true
+          #Este tambien esta relacionado con el Git pues forzaría la actualización del repositorio remoto cada vez
+          #que se inicia el servidor
           force-pull: true
-  profiles:
-    active: git
 
+#Le dice al servidor de configuración que debe registrarse como cliente en Eureka
+#Esto permite que otros clientes encuentren el config-server atravez de eureka sin necesidad de hardcodear la url
 eureka:
   client:
     service-url:
