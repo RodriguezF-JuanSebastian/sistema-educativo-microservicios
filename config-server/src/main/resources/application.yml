@@ -1,0 +1,21 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/RodriguezF-JuanSebastian/sistema-educativo-microservicios.git
+          default-label: main
+          clone-on-start: true
+          force-pull: true
+  profiles:
+    active: git
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
