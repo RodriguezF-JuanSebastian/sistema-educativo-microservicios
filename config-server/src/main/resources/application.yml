@@ -23,10 +23,10 @@ spring:
           #main indica la rama por defecro del repositorio Git que usara para obtener las configuraciones
           default-label: main
           #si se utiliza Git en vez de native, esto indica que se dbe clonar el repositorio al iniciar el sevidor
-          clone-on-start: true
+          #clone-on-start: true
           #Este tambien esta relacionado con el Git pues forzaría la actualización del repositorio remoto cada vez
           #que se inicia el servidor
-          force-pull: true
+          #force-pull: true
 
 #Le dice al servidor de configuración que debe registrarse como cliente en Eureka
 #Esto permite que otros clientes encuentren el config-server atravez de eureka sin necesidad de hardcodear la url

@@ -1,48 +1,87 @@
-# Sistema Educativo Distribuido - Microservicios
+Sistema Educativo Distribuido con Microservicios
 
-Este proyecto es una implementación de un sistema educativo basado en una arquitectura de microservicios utilizando Spring Boot y Spring Cloud.
+Tecnologías y Herramientas Utilizadas:
+Spring Boot (v3.x)
+Spring Cloud (Config, Eureka)
+Spring Web
+Spring Data JPA
+MySQL
+MySQL Workbench
+Maven
+Java 17
+VS Code
+Postman
+Git + GitHub
 
-## Microservicios del sistema
+Arquitectura General:
+Se diseñó un sistema educativo distribuido basado en arquitectura de microservicios, que permite la gestión de usuarios (estudiantes y docentes), matrículas, y configuración centralizada. Los microservicios se comunican entre sí mediante descubrimiento de servicios a través de Eureka, y las propiedades están centralizadas en un Config Server.
 
-- **usuarios-servicio**: Gestión de estudiantes y docentes.
-- **asignaturas-servicio**: CRUD de asignaturas.
-- **matriculas-servicio**: Registro de estudiantes en asignaturas.
-- **config-server** : Este va hacer el servidor central de configuración
-- **Eureka-server**: Este sera un servicio de descubrimiento Eureka
+Microservicios Implementados:
+eureka-server
+Microservicio de descubrimiento que actúa como registro central para todos los demás.
+Puerto: 8761.
+Panel accesible en: http://localhost:8761.
+Configuración en application.properties deshabilita el autoregistro (register-with-eureka: false).
 
-## Tecnologías utilizadas
+config-server:
+Centraliza la configuración de todos los microservicios.
+Puerto: 8888.
+Soporta perfil native para leer archivos desde el sistema de archivos.
+Se conecta a Eureka para ser descubierto por los demás servicios.
+Se creó un repositorio local config-repo con archivos YAML para cada microservicio (usuarios-service.yml, matriculas-service.yml).
 
-- Java + Spring Boot
-- Spring Cloud (Eureka, Config Server, Feign)
-- JWT para seguridad
-- Docker para despliegue
-- GitHub para control de versiones
+usuarios-service:
+Gestiona información de estudiantes y docentes.
+Puerto definido dinámicamente en usuarios-service.yml vía config-server.
+Registro en Eureka como USUARIOS-SERVICE.
+Incluye conexión con base de datos MySQL.
+Usa Spring Data JPA para persistencia de entidades.
 
-## Enfoque distribuido
+matriculas-service:
+Encargado del manejo de matrículas estudiantiles.
+Puerto definido mediante configuración remota.
+Registro en Eureka como MATRICULAS-SERVICE.
+También conectado a MySQL.
 
-Cada microservicio cuenta con su propia base de datos, configuración independiente y comunicación vía REST utilizando FeignClient. El objetivo es lograr un sistema escalable, seguro y
-mantenible
----
+Configuración de Base de Datos:
+Se utilizó MySQL Workbench para crear las bases de datos requeridas.
+Se definieron propiedades como spring.datasource.url, username, password, y jpa.hibernate.ddl-auto en los archivos YAML gestionados por el config-server.
+Se crearon entidades, repositorios y controladores para manipular datos desde cada microservicio.
 
-# Desarollo
+Estructura General del Proyecto sistema-educativo/:
+sistema-educativo-microservicios/
+│
+├── config-server/
+│   └── application.yml, configuración central
+│
+├── eureka-server/
+│   └── Registro de servicios
+│
+├── usuarios-servicio/
+│   ├── Modelos
+│   ├── Repositorios
+│   ├── Controladores
+│   └── application.yml (via config-server)
+│
+├── matriculas-servicio/
+│   ├── Modelos
+│   ├── Repositorios
+│   ├── Controladores
+│   └── application.yml (via config-server)
 
-1. Se realiza la creación de una carpeta local: sistema-educativo-microservicios-harold-valencia-juan-rodriguez
-   Aquí encontraremos el contenedor del proyecto distribuido de microservicios
-2. Creamos las siguientes carpetas dentro de la carpeta sistema-educativo-microservicios-harold-valencia-juan-rodriguez
-   usuarios-servicio
-   asignaturas-servicio
-   matriculas-servicio
-   config-server 
-   eureka-server 
-3. Realizamos la creación del README.md con la descripción general del sistema, listando
-   Los microservicios que la componen
-   Las tecnologías utilizadas (Java, Spring Boot, Sprinh Cloud, JWT, Docker, Git)
-   El enfoque de la distrubución que se utilizara para nuestra arquitectura
-4. Inicialización del repositorio local de Git con el comando: git init
-   Se añadio el README.md al área de staging con el comando: git add README.md
-   Se realiza el primer commit con el comando y nombre: git commit -m "Estructura inicial del proyecto y carpetas de microservicios creadas"
-   Se sube el proyecto a GitHub, se crea un repositorio remoto en Git: https://github.com/RodriguezF-JuanSebastian/sistema-educativo-microservicios
-   Se realiza la vinculación del repositorio local con el remoto y se subio el primer commit con los comandos:
-   git remote add origin https://github.com/RodriguezF-JuanSebastian/sistema-educativo-microservicios.git
-   git branch -M main
-   git push -u origin main
+Integraciones Clave
+Spring Cloud Config: permite que todos los microservicios carguen su configuración desde un solo punto central.
+Eureka Server: permite registrar y descubrir microservicios dinámicamente.
+Base de Datos MySQL: cada servicio accede a su propia base de datos configurada a través de su application.yml.
+Conexión probada desde Workbench y validada mediante logs de inicialización.
+PA/Hibernate configurado para persistencia de datos, con Hikari como pool de conexiones.
+
+Pruebas
+Se ejecutaron pruebas unitarias mínimas para validar la correcta carga del contexto de aplicación.
+Pruebas exitosas en usuarios-service, verificando su conexión con Eureka, Config Server y MySQL.
+Todos los microservicios se levantan correctamente y se registran en Eureka:
+Application           Status
+-------------------   ------------------------
+CONFIG-SERVER         UP (1) - localhost:8888
+USUARIOS-SERVICE      UP (1) - puerto dinámico
+MATRICULAS-SERVICE    UP (1) - puerto dinámico

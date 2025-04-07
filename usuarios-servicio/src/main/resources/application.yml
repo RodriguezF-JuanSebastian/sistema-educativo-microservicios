@@ -1,0 +1,22 @@
+spring:  # Configuración general del framework Spring Boot
+  application:
+    name: usuarios-service  
+    # Nombre del microservicio. Este identificador se usará para:
+    # - Buscar el archivo de configuración en el config-server.
+    # - Registrarse con este nombre en el servidor Eureka (para descubrimiento de servicios).
+
+  config:
+    import: optional:configserver:http://localhost:8888  
+    # Indica que este microservicio debe importar su configuración desde el config-server ubicado en la URL indicada.
+    # El prefijo "optional:" evita errores si el servidor de configuración no está disponible (útil en entornos de desarrollo).
+
+eureka:  # Configuración del cliente de Eureka
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka  
+      # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
+
+server:
+  port: 0  
+  # Define que el microservicio se ejecutará en un puerto aleatorio cada vez que se inicie.
+  # Esto es útil para levantar múltiples instancias sin conflictos de puerto.

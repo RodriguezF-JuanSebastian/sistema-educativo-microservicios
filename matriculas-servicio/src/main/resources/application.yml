@@ -1,0 +1,13 @@
+spring:
+  # Agrupa todas las propiedades relacionadas con el framework Spring
+  
+  application:
+    name: matriculas-service
+    # Define el nombre del microservicio.
+    # Este nombre se usa para identificar el servicio en Eureka y también para buscar su archivo de configuración remoto en el Config Server
+
+  config:
+    import: optional:configserver:http://localhost:8888
+    # Indica que la configuración externa se debe importar desde un Config Server ubicado en la URL especificada
+    # La palabra clave `optional:` permite que la aplicación siga funcionando aunque no encuentre el Config Server
+    # http://localhost:8888 es la URL del servidor de configuración local que proporciona las propiedades a este microservicio
