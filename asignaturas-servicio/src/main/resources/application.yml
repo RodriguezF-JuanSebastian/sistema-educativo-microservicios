@@ -1,6 +1,6 @@
 spring:  # Configuración general del framework Spring Boot
   application:
-    name: usuarios-service  
+    name: asignaturas-servicio  
     # Nombre del microservicio. Este identificador se usará para:
     # - Buscar el archivo de configuración en el config-server.
     # - Registrarse con este nombre en el servidor Eureka (para descubrimiento de servicios).

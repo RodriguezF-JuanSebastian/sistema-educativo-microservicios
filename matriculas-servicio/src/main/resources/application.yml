@@ -11,3 +11,10 @@ spring:
     # Indica que la configuración externa se debe importar desde un Config Server ubicado en la URL especificada
     # La palabra clave `optional:` permite que la aplicación siga funcionando aunque no encuentre el Config Server
     # http://localhost:8888 es la URL del servidor de configuración local que proporciona las propiedades a este microservicio
+
+
+eureka:  # Configuración del cliente de Eureka
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka  
+      # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
