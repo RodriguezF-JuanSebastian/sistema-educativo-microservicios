@@ -1,3 +1,20 @@
+/*
+ * Clase principal del microservicio `matriculas-service`.
+ * 
+ * Este archivo contiene el punto de entrada de la aplicación Spring Boot.
+ * Su función principal es iniciar y configurar el contexto de Spring, lanzar el servidor embebido
+ * (como Tomcat) y habilitar la comunicación entre microservicios mediante Feign Client.
+ * 
+ * Anotaciones clave:
+ * - @SpringBootApplication: activa la configuración automática de Spring, el escaneo de componentes
+ * y la capacidad de registrar beans en el contexto.
+ * - @EnableFeignClients: habilita la creación automática de interfaces cliente para consumir otros
+ * microservicios de forma declarativa usando Feign.
+ * 
+ * Esta clase es fundamental para que el microservicio pueda funcionar correctamente
+ * dentro de una arquitectura basada en Spring Cloud.
+ */
+
 package com.edu.matriculasservice;
 // Define el paquete en el que se encuentra esta clase
 // El nombre del paquete refleja la estructura del proyecto y la ubicación del microservicio

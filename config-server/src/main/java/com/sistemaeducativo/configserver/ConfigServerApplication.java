@@ -1,3 +1,26 @@
+/*
+ * CONFIG SERVER - SPRING CLOUD
+ * Esta clase representa el punto de entrada del microservicio de **servidor de configuración** 
+ * (Config Server) en una arquitectura de microservicios con Spring Cloud.
+ * 
+ * FUNCIONALIDAD PRINCIPAL:
+ * Actúa como servidor centralizado de configuración para todos los microservicios del sistema.
+ * Expone configuraciones externas desde un repositorio Git (o sistema de archivos local) 
+ * en formato `.yml` o `.properties`.
+ * Permite que los microservicios clientes (usuarios-service, matriculas-service, etc.)
+ * obtengan sus configuraciones dinámicamente desde este servidor.
+ * 
+ * ANOTACIONES CLAVE:
+ * @SpringBootApplication → Marca la clase como una aplicación Spring Boot.
+ * @EnableConfigServer → Habilita el modo servidor de configuración (Spring Cloud Config).
+ * @EnableDiscoveryClient → Permite que este servidor se registre en Eureka (para ser localizado 
+ * automáticamente por otros servicios sin hardcodear su URL).
+ * 
+ * EJECUCIÓN:
+ * - Al ejecutar esta clase, se levanta un servidor Spring Boot (por defecto en el puerto 8888)
+ * que sirve los archivos de configuración solicitados por los clientes registrados.
+ */
+
 //Define el paquete al que pertenece esta clase
 package com.sistemaeducativo.configserver;
 

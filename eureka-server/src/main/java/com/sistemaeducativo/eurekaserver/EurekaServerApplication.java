@@ -1,8 +1,19 @@
 /*
- * Este es el codigo principal de un microservicio de Eureka Server en Spring Boot
- * que actua como un servidor de descubrimiento de servicios dentro de una arquitectura
- * de microservicios
+ * MICRO SERVIDOR EUREKA - SPRING CLOUD
+ * Esta clase representa el punto de entrada del microservicio Eureka Server.
+ * Su función principal es actuar como **servidor de descubrimiento**, permitiendo
+ * que otros microservicios dentro del sistema se **registren y descubran** entre ellos.
+ * 
+ * FUNCIONALIDADES CLAVE:
+ * Se configura automáticamente como aplicación Spring Boot gracias a @SpringBootApplication.
+ * Se habilita como **servidor Eureka** mediante la anotación @EnableEurekaServer.
+ * Permite que clientes Eureka (otros microservicios) se conecten, se registren y busquen servicios.
+ * 
+ * EJECUCIÓN:
+ * Al correr esta clase, se levanta un servidor web embebido (por defecto en el puerto 8761)
+ * que expone una interfaz visual en http://localhost:8761 para ver los servicios registrados.
  */
+
 package com.sistemaeducativo.eurekaserver;
 //Declara el paquete al que pertenece la clase, esta es una forma de organizar el codigo
 
