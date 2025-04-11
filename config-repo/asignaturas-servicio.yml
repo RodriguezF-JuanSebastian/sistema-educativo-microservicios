@@ -2,11 +2,11 @@
 spring:
   datasource:
     # URL de conexión a la base de datos MySQL (host: localhost, puerto: 3306, base de datos: usuariosdb)
-    url: jdbc:mysql://localhost:3306/usuariosdb
+    url: jdbc:mysql://localhost:3306/asignaturas_db
     # Usuario de la base de datos
     username: root
     # Contraseña del usuario de la base de datos
-    password: Root1234!
+    password: 318323Harol
     # Clase del driver JDBC para conectar con MySQL
     driver-class-name: com.mysql.cj.jdbc.Driver
 

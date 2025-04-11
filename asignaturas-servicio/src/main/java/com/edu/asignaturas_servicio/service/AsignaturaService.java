@@ -39,4 +39,8 @@ public interface AsignaturaService {
     Asignatura guardar(Asignatura asignatura);
     //Función metodo para eliminar una asignatura por su ID, su uso borrar del sistema la asignatura indicadas
     void eliminar(Long id);
+
+    //Actualiza los datos de una asignatura ya existente
+    //Recibe un objeto Asignatura con los cambios y retorna el objeto actualizado
+    Asignatura actualizar(Asignatura asignatura);
 }

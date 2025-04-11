@@ -59,4 +59,14 @@ public class AsignaturaController {
     public void eliminar(@PathVariable Long id) { //Llama al servicio para eliminar la asignatura con ese ID
         asignaturaService.eliminar(id);
     }
+
+    //Endpoint PUT que permite actualizar una asignatura existente
+    //Recibe el objeto Asignatura actualizado desde el cuerpo de la petición
+    //URL: /api/asignaturas
+    @PutMapping
+    public Asignatura actualizar(@RequestBody Asignatura asignatura) {
+        return asignaturaService.actualizar(asignatura);
+    }
+
+
 }

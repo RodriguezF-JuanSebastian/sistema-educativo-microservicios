@@ -54,4 +54,18 @@ public class AsignaturaServiceImpl implements AsignaturaService {
     public void eliminar(Long id) {
         asignaturaRepository.deleteById(id);
     }
+
+    //Actualiza una asignatura existente, primero verificando que exista en la base de datos
+    //Si no existe, lanza una excepción en tiempo de ejecución
+    @Override
+    public Asignatura actualizar(Asignatura asignatura) {
+        Optional<Asignatura> existente = asignaturaRepository.findById(asignatura.getId());
+        if (existente.isPresent()) {
+            return asignaturaRepository.save(asignatura);
+        } else {
+            //Lanza una excepción si no se encuentra la asignatura con el ID dado
+            throw new RuntimeException("Asignatura no encontrada con ID: " + asignatura.getId());
+        }
+    }
+
 }
