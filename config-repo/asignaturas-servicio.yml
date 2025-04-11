@@ -1,0 +1,44 @@
+# Configuración del origen de datos (base de datos)
+spring:
+  datasource:
+    # URL de conexión a la base de datos MySQL (host: localhost, puerto: 3306, base de datos: usuariosdb)
+    url: jdbc:mysql://localhost:3306/usuariosdb
+    # Usuario de la base de datos
+    username: root
+    # Contraseña del usuario de la base de datos
+    password: Root1234!
+    # Clase del driver JDBC para conectar con MySQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      # Configura el comportamiento de Hibernate respecto al esquema de la base de datos:
+      # 'update' crea o actualiza automáticamente las tablas según las entidades
+      ddl-auto: update
+    # Muestra en consola las consultas SQL generadas por JPA
+    show-sql: true
+    # Dialecto de base de datos utilizado por Hibernate para MySQL
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+# Configura el puerto del servidor. El valor '0' indica que se asigne un puerto aleatorio en tiempo de ejecución
+server:
+  port: 0
+
+# Configuración del cliente Eureka para el registro de servicios
+eureka:
+  client:
+    service-url:
+      # Dirección del servidor Eureka donde se registrará este microservicio
+      defaultZone: http://localhost:8761/eureka
+
+# Configuración del nivel de logging (registros) para la aplicación
+logging:
+  level:
+    # Nivel de log general para toda la aplicación (INFO muestra eventos informativos)
+    root: INFO
+    # Nivel de log específico para la comunicación con el Config Server
+    org.springframework.cloud.config: DEBUG
+    # Nivel de log específico para las llamadas HTTP usando RestTemplate
+    org.springframework.web.client.RestTemplate: DEBUG
+
+

@@ -1,0 +1,42 @@
+# Configuración principal de Spring Boot
+spring:
+  datasource:
+    # URL de conexión a la base de datos MySQL. Se conecta a la base 'matriculasdb' en localhost.
+    url: jdbc:mysql://localhost:3306/matriculasdb
+    # Usuario para autenticarse en la base de datos.
+    username: root
+    # Contraseña del usuario de base de datos.
+    password: Root1234!
+    # Clase del driver JDBC para conectar con MySQL.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      # Define la estrategia para la creación de tablas. 'update' crea o actualiza la estructura sin eliminar datos.
+      ddl-auto: update
+    # Muestra las sentencias SQL que se ejecutan en consola (útil para depuración).
+    show-sql: true
+    # Define el dialecto de la base de datos que se usará para generar el SQL compatible con MySQL.
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+# Configuración de Eureka Client para descubrimiento de servicios
+eureka:
+  client:
+    service-url:
+      # Dirección del servidor Eureka al que este microservicio se registrará.
+      defaultZone: http://localhost:8761/eureka
+
+# Configuración del servidor embebido (Tomcat)
+server:
+  # Asigna un puerto aleatorio en cada ejecución (útil en pruebas y balanceo de carga).
+  port: 0
+
+# Configuración del nivel de logs para monitoreo y depuración
+logging:
+  level:
+    # Nivel de log general de la aplicación
+    root: INFO
+    # Nivel de log para la comunicación con el servidor de configuración de Spring Cloud
+    org.springframework.cloud.config: DEBUG
+    # Nivel de log para llamadas REST (útil para depurar peticiones/respuestas HTTP)
+    org.springframework.web.client.RestTemplate: DEBUG

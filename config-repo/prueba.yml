@@ -1,0 +1,8 @@
+#Esto es una prueba para confirmar que el micro servicio confgi-server funciona bien
+
+#Esta parte indica el puerto en el que se levantar el microservicio
+server:
+  port: 9001
+
+#Mensaje personalizado para evidenciarlo en la ruta http://localhost:8888/prueba/default
+mensaje: "Esto es una prueba para confimar que todo funciona bien!"
