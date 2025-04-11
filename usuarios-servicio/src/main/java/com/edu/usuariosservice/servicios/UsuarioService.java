@@ -61,4 +61,31 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) { //Elimina un usuario de la base de datos segun su id
         usuarioRepository.deleteById(id);
     }
+
+    public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+
+        if (usuarioExistente.isPresent()) {
+
+            System.out.println("Datos recibidos para actualizar:");
+            System.out.println("Nombre: " + usuarioActualizado.getNombre());
+            System.out.println("Email: " + usuarioActualizado.getEmail());
+            System.out.println("Password: " + usuarioActualizado.getPassword());
+            System.out.println("Rol: " + usuarioActualizado.getRol());
+
+
+            Usuario usuario = usuarioExistente.get();
+            usuario.setNombre(usuarioActualizado.getNombre());
+            usuario.setEmail(usuarioActualizado.getEmail());
+            usuario.setRol(usuarioActualizado.getRol());
+            usuario.setPassword(usuarioActualizado.getPassword());
+            usuario.setRol(usuarioActualizado.getRol());
+
+
+            return usuarioRepository.save(usuario); // Actualiza y guarda
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+    }
+
 }

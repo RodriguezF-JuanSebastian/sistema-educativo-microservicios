@@ -13,6 +13,9 @@ package com.edu.usuariosservice.modelos;
 
 //Importa las anotaciones necesarias de Jakarta Persistence API (JPA) para mapear esta clase a una base de datos 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity //Indica que esta clase es una entidad JPA lo que significa que sera mapeada a una tabla en la db
 @Table(name = "usuarios") //Define el nombre de la tabla en la base de datos a la que se va a mapear esta clase usuarios
@@ -23,17 +26,23 @@ public class Usuario { //Declara la clase usuario que representara a cada fila d
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id; //Atributo que representa el identificador unico de cada usuario
 
-    private String nombre; //Atributo que almacena el nombre del usuario 
+    @NotBlank
+    private String nombre; //Atributo que almacena el nombre del usuario
+    @Email
     private String email; //Atributo que almacena el correo electronico del usuario
-
+    @NotBlank
+    private String password; //Atributo para almacenar la contraseña de usuario
+    private String rol; //Atributo para almacenar el rol de los usuarios
     public Usuario() { //Constructor vacio obligatorio para que JPA pueda crear instancias de la entidad
     }
 
     //Constructor que permite crear objetos usuario de forma mas directa pasando los valores por parametro
-    public Usuario(Long id, String nombre, String email) {
+    public Usuario(Long id, String nombre, String email, String password, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
+        this.password = password;
+        this.rol = rol;
     }
 
     //Metodos Getter y Setter para cada atributo de la clase
@@ -60,5 +69,21 @@ public class Usuario { //Declara la clase usuario que representara a cada fila d
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

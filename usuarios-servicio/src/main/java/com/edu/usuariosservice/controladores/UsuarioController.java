@@ -71,4 +71,11 @@ public class UsuarioController {
     public void eliminarUsuario(@PathVariable Long id) { //Elimina el usuario correspondiente al ID recibido usando el servicio
         usuarioService.eliminarUsuario(id);
     }
+    //Actualizar usuarios por ID
+
+    @PutMapping("/{id}")
+    public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
+        return usuarioService.actualizarUsuario(id, usuarioActualizado);
+    }
+
 }

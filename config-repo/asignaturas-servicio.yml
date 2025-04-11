@@ -22,7 +22,7 @@ spring:
 
 # Configura el puerto del servidor. El valor '0' indica que se asigne un puerto aleatorio en tiempo de ejecución
 server:
-  port: 0
+  port: 8081
 
 # Configuración del cliente Eureka para el registro de servicios
 eureka:

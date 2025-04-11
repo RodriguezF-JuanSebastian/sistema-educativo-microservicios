@@ -19,6 +19,6 @@ eureka:  # Configuración del cliente de Eureka
     register-with-eureka: true
 
 server:
-  port: 0
-  # Define que el microservicio se ejecutará en un puerto aleatorio cada vez que se inicie.
+  port: 8081
+  # Definir el puerto del microservicio
   # Esto es útil para levantar múltiples instancias sin conflictos de puerto.
