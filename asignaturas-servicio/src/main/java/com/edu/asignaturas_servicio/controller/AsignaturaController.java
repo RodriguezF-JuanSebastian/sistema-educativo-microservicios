@@ -16,7 +16,7 @@
 //Declara el paquete de donde se encuentra este controlador
 package com.edu.asignaturas_servicio.controller;
 
-//Importa la clase entidad Asignatura y la interfaz de servicio AsignaturaService que se utilizara para la logica
+// la clase entidad Asignatura y la interfaz de servicio AsignaturaService que se utilizara para la logica
 //del negocio
 import com.edu.asignaturas_servicio.entity.Asignatura;
 import com.edu.asignaturas_servicio.service.AsignaturaService;
