@@ -2,11 +2,11 @@
 spring:
   datasource:
     # URL de conexión a la base de datos MySQL. Se conecta a la base 'matriculasdb' en localhost.
-    url: jdbc:mysql://localhost:3306/matriculasdb
+    url: jdbc:mysql://localhost:3306/matriculas-prueba_db
     # Usuario para autenticarse en la base de datos.
     username: root
     # Contraseña del usuario de base de datos.
-    password: Root1234!
+    password: 318323Harol
     # Clase del driver JDBC para conectar con MySQL.
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -29,7 +29,7 @@ eureka:
 # Configuración del servidor embebido (Tomcat)
 server:
   # Asigna un puerto aleatorio en cada ejecución (útil en pruebas y balanceo de carga).
-  port: 0
+  port: 8083
 
 # Configuración del nivel de logs para monitoreo y depuración
 logging:

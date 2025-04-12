@@ -18,14 +18,16 @@ import org.springframework.boot.SpringApplication; //Esta clase permite iniciar 
  * @ComponentScan: Le indica a Spring que busque otros componentes, servicios y configuraciones dentro 
  * del paquete y los registre.
  */
-import org.springframework.boot.autoconfigure.SpringBootApplication; 
-
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 //Esta notación marca la clase como punto de entrada 
 /*
  * Le permite a Spring Boot Escanear el paquete com.edu.asignaturas_servicio y subpaquetes para buscar 
  * clases anotadas con @Component, @Service, @Repository, @Controller y cargar configuraciones automáticamente
  */
+
 @SpringBootApplication
+@EnableFeignClients
 public class AsignaturasServicioApplication { //Aquí se declara la clase principal porque es la que tiene el metodo main
 	//Declara el metodo principal en java, este es el metodo que se ejecuta al iniciar la aplicación
 	public static void main(String[] args) { 
