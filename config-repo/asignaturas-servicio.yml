@@ -2,11 +2,11 @@
 spring:
   datasource:
     # URL de conexión a la base de datos MySQL (host: localhost, puerto: 3306, base de datos: usuariosdb)
-    url: jdbc:mysql://localhost:3306/asignaturas_db
+    url: jdbc:mysql://localhost:3306/asignaturasdb
     # Usuario de la base de datos
     username: root
     # Contraseña del usuario de la base de datos
-    password: 318323Harol
+    password: Root1234!
     # Clase del driver JDBC para conectar con MySQL
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -22,7 +22,7 @@ spring:
 
 # Configura el puerto del servidor. El valor '0' indica que se asigne un puerto aleatorio en tiempo de ejecución
 server:
-  port: 8081
+  port: 8082
 
 # Configuración del cliente Eureka para el registro de servicios
 eureka:

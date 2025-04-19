@@ -19,9 +19,16 @@ import com.edu.usuariosservice.modelos.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository //Anotación que marca la interfaz como un repositorio 
 //Declara la interfaz UsuarioRepository que extiende JpaRepository
 //Usuario: es la entidad que maneja el repositorio
 //Long: es el tipo de identificador ID de la entidad
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+    List<Usuario> findByRol(String rol);
+
+    Optional<Usuario> findByEmail(String email);
 }

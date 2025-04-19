@@ -17,8 +17,3 @@ eureka:  # Configuración del cliente de Eureka
       # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
     fetch-registry: true
     register-with-eureka: true
-
-server:
-  port: 8082
-  # Define que el microservicio se ejecutará en un puerto aleatorio cada vez que se inicie.
-  # Esto es útil para levantar múltiples instancias sin conflictos de puerto.

@@ -34,17 +34,14 @@ public class Asignatura {
     private String nombre;
     private String descripcion;
 
-    private int creditos;
-
     // Constructor vacío requerido para poder instanciar la clase automaticamente
     public Asignatura() {
     }
 
     // Constructor util para crear objetos Asignatura directamente con sus atributos 
-    public Asignatura(Long id, String nombre, String descripcion, int creditos) {
+    public Asignatura(Long id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
-        this.creditos = creditos;
         this.descripcion = descripcion;
     }
 
@@ -75,9 +72,4 @@ public class Asignatura {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    public int getCreditos() {return creditos;}
-
-    public void setCreditos(int creditos) {this.creditos = creditos;}
-
 }

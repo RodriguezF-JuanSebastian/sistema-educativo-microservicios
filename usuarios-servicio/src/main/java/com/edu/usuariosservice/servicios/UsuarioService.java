@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //Marca la clase como un componente de servicio gestionado por Spring
 import org.springframework.stereotype.Service;
 
+import com.edu.usuariosservice.excepciones.UsuarioNoEncontradoException;
+
 //Importa las librerias estandar de java
 import java.util.List; //Representa una lista de elementos
 import java.util.Optional; //Representa un objeto que puede o no contener un valor 
@@ -62,30 +64,22 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+    //*******************************************************************************************
 
-        if (usuarioExistente.isPresent()) {
+    public List<Usuario> obtenerUsuariosPorRol(String rol){
+        return usuarioRepository.findByRol(rol);
+    }
 
-            System.out.println("Datos recibidos para actualizar:");
-            System.out.println("Nombre: " + usuarioActualizado.getNombre());
-            System.out.println("Email: " + usuarioActualizado.getEmail());
-            System.out.println("Password: " + usuarioActualizado.getPassword());
-            System.out.println("Rol: " + usuarioActualizado.getRol());
-
-
-            Usuario usuario = usuarioExistente.get();
+    public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado){
+        return usuarioRepository.findById(id).map(usuario ->{
             usuario.setNombre(usuarioActualizado.getNombre());
             usuario.setEmail(usuarioActualizado.getEmail());
             usuario.setRol(usuarioActualizado.getRol());
-            usuario.setPassword(usuarioActualizado.getPassword());
-            usuario.setRol(usuarioActualizado.getRol());
-
-
-            return usuarioRepository.save(usuario); // Actualiza y guarda
-        } else {
-            throw new RuntimeException("Usuario no encontrado con ID: " + id);
-        }
+            usuario.setTelefono(usuarioActualizado.getTelefono());
+            usuario.setDireccion(usuarioActualizado.getDireccion());
+            usuario.setFechaNacimiento(usuarioActualizado.getFechaNacimiento());
+            usuario.setEstado(usuarioActualizado.getEstado());
+            return usuarioRepository.save(usuario);
+        }).orElseThrow(()-> new UsuarioNoEncontradoException("usuario con Id " + id + " no encontrado"));
     }
-
 }

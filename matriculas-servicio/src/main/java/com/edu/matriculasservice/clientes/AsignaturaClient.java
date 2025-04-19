@@ -1,13 +1,14 @@
 package com.edu.matriculasservice.clientes;
 
-import com.edu.matriculasservice.dto.MatriculaAsignaturaDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "asignaturas-servicio", url = "http://desktop-97vrdkd.lan:8081/api")
+// Se conecta al microservicio llamado "asignaturas-servicio" registrado en Eureka
+@FeignClient(name = "asignaturas-servicio")
 public interface AsignaturaClient {
-    @GetMapping("/asignaturas/{id}")
-    MatriculaAsignaturaDTO getAsignatura(@PathVariable("id") Long id);
-}
 
+    // Llama al endpoint /api/asignaturas/{id} del microservicio asignaturas-servicio
+    @GetMapping("/asignaturas/{id}")
+    MatriculaAsignaturaDTO obtenerAsignaturaPorId(@PathVariable("id") Long id);
+}
