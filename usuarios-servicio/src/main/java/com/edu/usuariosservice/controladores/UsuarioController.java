@@ -27,6 +27,9 @@ import org.springframework.http.ResponseEntity;
 //Importa anotaciones de SPring necesarias para construir una API REST como @RestController @GetMapping, @PostMapping
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 //Importa las clases denecesarias para manejar lista de usuarios y resultados opcionales en caso de que no se encuentre user
 import java.util.List;
@@ -95,8 +98,27 @@ public class UsuarioController {
     }
 
     @GetMapping("/rol/{rol}")
-    public ResponseEntity<List<Usuario>> obtenerUsuariosPorRol(@PathVariable String rol){
-        return ResponseEntity.ok(usuarioService.obtenerUsuariosPorRol(rol));
+    public ResponseEntity<List<Usuario>> obtenerUsuariosPorTipoUsuario(@PathVariable String tipoUsuario){
+        return ResponseEntity.ok(usuarioService.obtenerUsuariosPorTipoUsuario(tipoUsuario));
     }
+
+    // Endpoint protegido - solo accesible con un JWT válido
+    @GetMapping("/usuario-auth")
+    public ResponseEntity<String> getUsuarioAutenticado(@AuthenticationPrincipal UserDetails userDetails) {
+        // Aquí devuelves información sobre el usuario autenticado
+        return ResponseEntity.ok("Usuario autenticado: " + userDetails.getUsername());
+    }
+
+    // Endpoint PUT para actualizar el password
+    @PutMapping("/actualizar-password/{id}")
+    public ResponseEntity<String> actualizarPassword(@PathVariable Long id, @RequestParam String newPassword) {
+        try {
+            usuarioService.actualizarPassword(id, newPassword);
+            return ResponseEntity.ok("Password actualizado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Error al actualizar el password: " + e.getMessage());
+        }
+    }    
+    
 }
 

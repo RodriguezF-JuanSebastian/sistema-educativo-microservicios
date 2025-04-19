@@ -22,14 +22,18 @@ public class SecurityConfig {
     private final UsuarioDetailsServiceImpl usuarioDetailsService;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
+    
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll() // Rutas públicas
-                .anyRequest().authenticated()           // Las demás requieren autenticación
+                .requestMatchers("/auth/**").permitAll() // Públicos (login, registro)
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/docente/**").hasRole("DOCENTE")
+                .requestMatchers("/estudiante/**").hasRole("ESTUDIANTE")
+                .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

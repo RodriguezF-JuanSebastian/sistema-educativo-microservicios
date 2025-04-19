@@ -33,7 +33,9 @@ package com.edu.usuariosservice; //Linea que indica a que paquete pertenece la c
 //Estas dos lineas importan las clases se Spring Boot que se necesitan para iniciar la aplicación
 import org.springframework.boot.SpringApplication; //Clase que se necesita para inicar la aplicación Spring Boot
 //Anotación que le dice a Spring Boot que esta clase es la clase principal y debe inicializar todo automaticamente
-import org.springframework.boot.autoconfigure.SpringBootApplication; 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories; 
 
 /*
  * Anotación que le dice a Spring Boot que esta es la clase principal del proyecto
@@ -44,6 +46,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 */
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.edu.usuariosservice.repositorios")
+@EntityScan(basePackages = "com.edu.usuariosservice.modelos")
 public class UsuariosServiceApplication { //Se declara la clase principal del microservicio
 
 	/*

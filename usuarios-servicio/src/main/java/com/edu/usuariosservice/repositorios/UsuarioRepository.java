@@ -28,7 +28,7 @@ import java.util.Optional;
 //Long: es el tipo de identificador ID de la entidad
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    List<Usuario> findByRol(String rol);
+    List<Usuario> findByTipoUsuario(String tipoUsuario);
 
     Optional<Usuario> findByEmail(String email);
 }
