@@ -28,37 +28,27 @@
  * queda disponible para recibir peticiones HTTP en sus controladores.
  */
 
-package com.edu.usuariosservice; //Linea que indica a que paquete pertenece la clase
+// 🔹 Paquete principal del microservicio
+package com.edu.usuariosservice;
 
-//Estas dos lineas importan las clases se Spring Boot que se necesitan para iniciar la aplicación
-import org.springframework.boot.SpringApplication; //Clase que se necesita para inicar la aplicación Spring Boot
-//Anotación que le dice a Spring Boot que esta clase es la clase principal y debe inicializar todo automaticamente
+// 🔹 Imports de Spring Boot
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+// 🔹 JPA y Escaneo de entidades/repositorios
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories; 
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-/*
- * Anotación que le dice a Spring Boot que esta es la clase principal del proyecto
- * Internamente es una combinación de
- * @Configuration: le dice a Spring que esta clase puede contener beans
- * @EnableAutoConfiguration: le dice a Spring Boot que configure la aplicación automáticamente
- * @ComponentScan: le dice a Spring que escanee este paquete y subpaquetes en busca de componentes (@Controller, @Service)
-*/
-
+/**
+ * 🔧 Clase principal del microservicio usuarios-service
+ * Contiene el método main() que inicia la aplicación.
+ */
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.edu.usuariosservice.repositorios")
-@EntityScan(basePackages = "com.edu.usuariosservice.modelos")
-public class UsuariosServiceApplication { //Se declara la clase principal del microservicio
+@EnableJpaRepositories(basePackages = "com.edu.usuariosservice.repository") // Repositorios JPA
+@EntityScan(basePackages = "com.edu.usuariosservice.model") // Entidades JPA
+public class UsuariosServiceApplication {
 
-	/*
-	 * Spring Boot siempre necesita una clase que contenga el main
-	 * Este es el punto de entrada de cualquier aplicación Java
-	 * Cuando se ejecuta la app empieza desde aquí
-	 */
-	public static void main(String[] args) {  
-		//Este metodo arranca el contexto de Spring Boot y pone en marcha toda la aplicación
-		//Recibe como argumento la clase principal y los argumentos que lleguen por consola (arsg)
-		SpringApplication.run(UsuariosServiceApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(UsuariosServiceApplication.class, args); // 🚀 Punto de arranque
+    }
 }
