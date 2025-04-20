@@ -1,7 +1,10 @@
 package com.edu.matriculasservice.service;
 
+import com.edu.matriculasservice.client.UsuarioFeignClient;
 import com.edu.matriculasservice.model.Matricula;
+import com.edu.matriculasservice.model.Usuario;
 import com.edu.matriculasservice.repository.MatriculaRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,20 @@ import java.util.List;
 public class MatriculaServiceImpl implements MatriculaService {
 
     private final MatriculaRepository matriculaRepository;
+    private final UsuarioFeignClient usuarioFeignClient;
 
-    public MatriculaServiceImpl(MatriculaRepository matriculaRepository) {
+
+    public MatriculaServiceImpl(MatriculaRepository matriculaRepository,
+                                UsuarioFeignClient usuarioFeignClient) {
         this.matriculaRepository = matriculaRepository;
+        this.usuarioFeignClient = usuarioFeignClient;
+    }
+
+        @Override
+    public void registrarMatricula(Long usuarioId) {
+        Usuario usuario = usuarioFeignClient.obtenerUsuarioPorId(usuarioId);
+        System.out.println("Usuario: " + usuario.getNombre());
+        // lógica de matrícula
     }
 
     @Override

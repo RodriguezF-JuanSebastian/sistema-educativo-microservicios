@@ -12,14 +12,13 @@
 package com.edu.usuariosservice.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.util.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +26,9 @@ public class Usuario implements UserDetails {
 
     private String nombre;
     private String email;
-    private String password;
+    //private String password;
     private String tipoUsuario;
-    private String telefono;
-    private String direccion;
-    private LocalDate fechaNacimiento;
-    private Boolean estado;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -45,20 +41,16 @@ public class Usuario implements UserDetails {
     // Constructor vacío y constructor completo
     public Usuario() {}
 
-    public Usuario(Long id, String nombre, String email, String password, String tipoUsuario,
-                   String telefono, String direccion, LocalDate fechaNacimiento, Boolean estado) {
+    public Usuario(Long id, String nombre, String email, String password, String tipoUsuario) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
-        this.password = password;
+        //this.password = password;
         this.tipoUsuario = tipoUsuario;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.fechaNacimiento = fechaNacimiento;
-        this.estado = estado;
+
     }
 
-    // Getters y Setters (los que ya te compartí antes)
+    // Getters y Setters 
 
     public String getEmail() {
         return email;
@@ -76,17 +68,15 @@ public class Usuario implements UserDetails {
         this.tipoUsuario = tipoUsuario;
     }
     
-    public Boolean getEstado() {
-        return estado;
+
+    /*
+    public Boolean getPassword() {
+        return password;
     }
-    
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-    
+
     public void setPassword(String password) {
         this.password = password;
-    }
+    } */
     
     public String getNombre() {
         return nombre;
@@ -96,32 +86,8 @@ public class Usuario implements UserDetails {
         this.nombre = nombre;
     }
     
-    public String getTelefono() {
-        return telefono;
-    }
-    
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-    
-    public String getDireccion() {
-        return direccion;
-    }
-    
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-    
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-    
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     // Metodos
-
+    /*
     @Override
     public String getUsername() {
         return email;  // Este método debe devolver el nombre de usuario, en este caso el email
@@ -155,5 +121,5 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return estado;  // El estado determina si la cuenta está habilitada
-    }
+    } */
 }

@@ -11,9 +11,16 @@ import java.util.List;
 public class MatriculaController {
 
     private final MatriculaService matriculaService;
+    
 
     public MatriculaController(MatriculaService matriculaService) {
         this.matriculaService = matriculaService;
+    }
+
+    @PostMapping("/registrar/{usuarioId}")
+    public String registrarMatricula(@PathVariable Long usuarioId) {
+        matriculaService.registrarMatricula(usuarioId);
+        return "Matrícula registrada para usuario con ID: " + usuarioId;
     }
 
     @GetMapping

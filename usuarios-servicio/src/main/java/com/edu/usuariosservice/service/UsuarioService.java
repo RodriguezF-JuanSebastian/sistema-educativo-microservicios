@@ -33,5 +33,5 @@
      void eliminarUsuario(Long id);
      Usuario actualizarUsuario(Long id, Usuario usuario);
      List<Usuario> obtenerUsuariosPorTipoUsuario(String tipoUsuario);
-     void actualizarPassword(Long id, String nuevaPassword);
+     //void actualizarPassword(Long id, String nuevaPassword);
  }

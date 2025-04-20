@@ -22,8 +22,8 @@
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.*;
  import org.springframework.web.bind.annotation.*;
- import org.springframework.security.core.annotation.AuthenticationPrincipal;
- import org.springframework.security.core.userdetails.UserDetails;
+ //import org.springframework.security.core.annotation.AuthenticationPrincipal;
+ //import org.springframework.security.core.userdetails.UserDetails;
  
  import java.util.*;
  
@@ -73,12 +73,12 @@
      public ResponseEntity<List<Usuario>> obtenerUsuariosPorTipoUsuario(@PathVariable String rol){
          return ResponseEntity.ok(usuarioService.obtenerUsuariosPorTipoUsuario(rol));
      }
- 
+     /*
      @GetMapping("/usuario-auth")
      public ResponseEntity<String> getUsuarioAutenticado(@AuthenticationPrincipal UserDetails userDetails) {
          return ResponseEntity.ok("Usuario autenticado: " + userDetails.getUsername());
-     }
- 
+     } 
+     
      @PutMapping("/actualizar-password/{id}")
      public ResponseEntity<String> actualizarPassword(@PathVariable Long id, @RequestBody CambioPasswordRequest request) {
          try {
@@ -87,6 +87,6 @@
          } catch (Exception e) {
              return ResponseEntity.status(400).body("Error al actualizar el password: " + e.getMessage());
          }
-    }
+    }*/
  }
 

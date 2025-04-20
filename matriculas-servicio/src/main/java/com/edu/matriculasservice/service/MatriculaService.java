@@ -22,4 +22,5 @@ public interface MatriculaService {
     Matricula guardar(Matricula matricula);
     Matricula obtenerPorId(Long id);
     void eliminar(Long id);
+    void registrarMatricula(Long usuarioId);
 }

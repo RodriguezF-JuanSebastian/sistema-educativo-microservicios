@@ -8,7 +8,8 @@ import java.util.List;
 
 /*
  * Implementación AsignaturaServiceImpl (Cómo lo voy a hacer)
- * La implementación de la interfaz es donde realmente escribes la lógica de cada uno de los métodos
+ * Interfaz AsignaturaService (Lo que quiero hacer)
+ * La interfaz define qué acciones o métodos deben estar disponibles en la implementación
  */
 
 @Service // Marca esta clase para que Spring la gestione como un servicio

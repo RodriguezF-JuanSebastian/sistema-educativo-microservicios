@@ -40,12 +40,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         usuario.setNombre(usuarioActualizado.getNombre());
         usuario.setEmail(usuarioActualizado.getEmail());
-        usuario.setPassword(usuarioActualizado.getPassword());
+        //usuario.setPassword(usuarioActualizado.getPassword());
         usuario.setTipoUsuario(usuarioActualizado.getTipoUsuario());
-        usuario.setTelefono(usuarioActualizado.getTelefono());
-        usuario.setDireccion(usuarioActualizado.getDireccion());
-        usuario.setFechaNacimiento(usuarioActualizado.getFechaNacimiento());
-        usuario.setEstado(usuarioActualizado.getEstado());
 
         return usuarioRepository.save(usuario);
     }
@@ -54,12 +50,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> obtenerUsuariosPorTipoUsuario(String tipoUsuario) {
         return usuarioRepository.findByTipoUsuario(tipoUsuario);
     }
-
+    /*
     @Override
     public void actualizarPassword(Long id, String nuevaPassword) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
         usuario.setPassword(nuevaPassword);
         usuarioRepository.save(usuario);
-    }
+    } */
 }
