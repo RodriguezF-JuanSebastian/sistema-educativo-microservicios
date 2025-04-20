@@ -40,3 +40,22 @@ logging:
     org.springframework.cloud.config: DEBUG
     # Nivel de log para llamadas REST (útil para depurar peticiones/respuestas HTTP)
     org.springframework.web.client.RestTemplate: DEBUG
+
+# usuarios-servicio.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+info:
+  app:
+    name: Matriculas Microservicio
+    version: 1.0.0

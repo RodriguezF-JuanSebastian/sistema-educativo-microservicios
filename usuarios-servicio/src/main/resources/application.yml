@@ -23,3 +23,17 @@ server:
   port: 8082
   # Define que el microservicio se ejecutará en un puerto aleatorio cada vez que se inicie.
   # Esto es útil para levantar múltiples instancias sin conflictos de puerto.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  app:
+    name: Usuarios Microservicio
+    version: 1.0.0

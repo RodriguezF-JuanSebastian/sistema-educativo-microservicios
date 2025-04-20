@@ -18,3 +18,21 @@ eureka:  # Configuración del cliente de Eureka
     service-url:
       defaultZone: http://localhost:8761/eureka  
       # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
+
+microservicios:
+  token-jwt: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NTEwMjE0NywiZXhwIjoxNzQ1MTg4NTQ3fQ.AfaWsu-Cuza-RHUjxQYsj7D5yRcwZLkJHkbfbLLqiuI
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  app:
+    name: Matriculas Microservicio
+    version: 1.0.0
+

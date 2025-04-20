@@ -41,4 +41,21 @@ logging:
     # Nivel de log específico para las llamadas HTTP usando RestTemplate
     org.springframework.web.client.RestTemplate: DEBUG
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+info:
+  app:
+    name: Asignaturas Microservicio
+    version: 1.0.0
 

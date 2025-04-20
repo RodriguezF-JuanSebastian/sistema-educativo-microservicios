@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-repo:/config-repo
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-net
+
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-net
+
+  usuarios-servicio:
+    build: ./usuarios-servicio
+    ports:
+      - "8082:8082"
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-net
+
+  asignaturas-servicio:
+    build: ./asignaturas-servicio
+    ports:
+      - "8081:8081"
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-net
+
+  matriculas-servicio:
+    build: ./matriculas-servicio
+    ports:
+      - "8083:8083"
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-net
+
+networks:
+  spring-net:
+    driver: bridge
