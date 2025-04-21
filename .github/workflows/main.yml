@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        service: [usuarios-servicio, asignaturas-servicio, matriculas-servicio]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,63 +24,32 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # --- Iniciar Eureka Server ---
+      - name: Build Eureka Server
+        run: |
+          cd eureka-server
+          mvn clean package
+          cd ..
+
       - name: Start Eureka Server
         run: |
           nohup java -jar eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar > eureka.log 2>&1 &
 
-      # --- Iniciar Config Server ---
-      - name: Start Config Server
+      - name: Wait for Eureka to start
         run: |
-          nohup java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar > config.log 2>&1 &
+          for i in {1..10}; do
+            if curl -s http://localhost:8761/eureka/; then
+              echo "Eureka is up!"
+              break
+            fi
+            echo "Waiting for Eureka..."
+            sleep 5
+          done
+          if ! curl -s http://localhost:8761/eureka/; then
+            echo "Eureka failed to start"
+            cat eureka.log
+            exit 1
+          fi
 
-      # --- Esperar a Eureka y Config ---
-      - name: Wait for Eureka and Config
-        run: |
-          echo "Esperando Eureka en http://localhost:8761/eureka/..."
-          until curl -s http://localhost:8761/eureka/; do sleep 5; done
-          echo "Esperando Config Server en http://localhost:8888/..."
-          until curl -s http://localhost:8888/actuator/health; do sleep 5; done
-
-      # --- Iniciar usuarios-servicio (puerto 8082) ---
-      - name: Start usuarios-servicio
-        run: |
-          nohup java -jar usuarios-servicio/target/usuarios-servicio-0.0.1-SNAPSHOT.jar > usuarios.log 2>&1 &
-
-      # --- Iniciar asignaturas-servicio (puerto 8081) ---
-      - name: Start asignaturas-servicio
-        run: |
-          nohup java -jar asignaturas-servicio/target/asignaturas-servicio-0.0.1-SNAPSHOT.jar > asignaturas.log 2>&1 &
-
-      # --- Esperar a usuarios y asignaturas ---
-      - name: Wait for usuarios and asignaturas
-        run: |
-          echo "Esperando usuarios-servicio en http://localhost:8082/..."
-          until curl -s http://localhost:8082/actuator/health; do sleep 5; done
-          echo "Esperando asignaturas-servicio en http://localhost:8081/..."
-          until curl -s http://localhost:8081/actuator/health; do sleep 5; done
-
-      # --- Compilar y testear cada microservicio ---
-      - name: Build and test usuarios-servicio
-        working-directory: usuarios-servicio
+      - name: Build and Test ${{ matrix.service }}
+        working-directory: ${{ matrix.service }}
         run: mvn clean install
-
-      - name: Build and test asignaturas-servicio
-        working-directory: asignaturas-servicio
-        run: mvn clean install
-
-      - name: Build and test matriculas-servicio
-        working-directory: matriculas-servicio
-        run: mvn clean install
-
-      # --- Subir logs como artefactos por si algo falla ---
-      - name: Upload logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs
-          path: |
-            eureka.log
-            config.log
-            usuarios.log
-            asignaturas.log
