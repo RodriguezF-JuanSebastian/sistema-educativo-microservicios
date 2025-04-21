@@ -1,4 +1,4 @@
-#Indica el puerto en el que se levantara el servidor 
+#Indica el puerto en el que se levantara el servidor
 #Este es el puerto que utilizan por defecto muchos microservicios cliente para buscar su configuración
 server:
   port: 8888
@@ -18,10 +18,10 @@ spring:
     config:
       server:
         native:
-          search-locations: file:///sistema-educativo-microservicios/config-repo
+          search-locations: file:///C:/Users/harol/Documents/sistema-educativo-microservicios/config-repo
           #Parametro utilizado cuando el respositorio es Git
           #main indica la rama por defecro del repositorio Git que usara para obtener las configuraciones
-          default-label: main
+          #default-label: main
           #si se utiliza Git en vez de native, esto indica que se dbe clonar el repositorio al iniciar el sevidor
           #clone-on-start: true
           #Este tambien esta relacionado con el Git pues forzaría la actualización del repositorio remoto cada vez

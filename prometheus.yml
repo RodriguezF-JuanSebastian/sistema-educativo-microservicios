@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s  # Frecuencia con la que Prometheus recolecta métricas
+
+scrape_configs:
+  - job_name: 'matriculas-servicio'
+    metrics_path: '/actuator/prometheus'  # Ruta donde expone las métricas tu app Spring Boot
+    static_configs:
+      - targets: ['host.docker.internal:8083']  # Dirección donde corre tu app dentro de Docker
+
+  - job_name: 'usuarios-servicio'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8081' ]
+    bearer_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NTEwMjE0NywiZXhwIjoxNzQ1MTg4NTQ3fQ.AfaWsu-Cuza-RHUjxQYsj7D5yRcwZLkJHkbfbLLqiuI  # Ruta a tu archivo con el token JWT
+
+  - job_name: 'asignaturas-servicio'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'host.docker.internal:8081' ]

@@ -1,26 +1,17 @@
 spring:
-  # Agrupa todas las propiedades relacionadas con el framework Spring
-  
   application:
     name: matriculas-service
-    # Define el nombre del microservicio.
-    # Este nombre se usa para identificar el servicio en Eureka y también para buscar su archivo de configuración remoto en el Config Server
-
   config:
     import: optional:configserver:http://localhost:8888
-    # Indica que la configuración externa se debe importar desde un Config Server ubicado en la URL especificada
-    # La palabra clave `optional:` permite que la aplicación siga funcionando aunque no encuentre el Config Server
-    # http://localhost:8888 es la URL del servidor de configuración local que proporciona las propiedades a este microservicio
 
-
-eureka:  # Configuración del cliente de Eureka
+eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka  
-      # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
+      defaultZone: http://localhost:8761/eureka
 
 microservicios:
   token-jwt: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NTEwMjE0NywiZXhwIjoxNzQ1MTg4NTQ3fQ.AfaWsu-Cuza-RHUjxQYsj7D5yRcwZLkJHkbfbLLqiuI
+
 
 management:
   endpoints:
@@ -31,8 +22,8 @@ management:
     health:
       show-details: always
 
+
 info:
   app:
     name: Matriculas Microservicio
     version: 1.0.0
-

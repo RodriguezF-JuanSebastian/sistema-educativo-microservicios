@@ -1,65 +1,27 @@
-version: '3.8'
-
+version: '3'
 services:
-
-  config-server:
-    build: ./config-server
+  prometheus:
+    image: prom/prometheus:v2.43.0
+    container_name: prometheus
     ports:
-      - "8888:8888"
+      - "9090:9090"
     volumes:
-      - ./config-repo:/config-repo
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
-      - spring-net
+      - monitoring
 
-  eureka-server:
-    build: ./eureka-server
+  grafana:
+    image: grafana/grafana:8.2.5
+    container_name: grafana
     ports:
-      - "8761:8761"
-    depends_on:
-      - config-server
+      - "3000:3000"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
-      - spring-net
-
-  usuarios-servicio:
-    build: ./usuarios-servicio
-    ports:
-      - "8082:8082"
+      - monitoring
     depends_on:
-      - config-server
-      - eureka-server
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring-net
-
-  asignaturas-servicio:
-    build: ./asignaturas-servicio
-    ports:
-      - "8081:8081"
-    depends_on:
-      - config-server
-      - eureka-server
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring-net
-
-  matriculas-servicio:
-    build: ./matriculas-servicio
-    ports:
-      - "8083:8083"
-    depends_on:
-      - config-server
-      - eureka-server
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring-net
+      - prometheus
 
 networks:
-  spring-net:
+  monitoring:
     driver: bridge

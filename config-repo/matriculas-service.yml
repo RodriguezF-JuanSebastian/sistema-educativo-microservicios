@@ -41,7 +41,6 @@ logging:
     # Nivel de log para llamadas REST (útil para depurar peticiones/respuestas HTTP)
     org.springframework.web.client.RestTemplate: DEBUG
 
-# usuarios-servicio.yml
 management:
   endpoints:
     web:

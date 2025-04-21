@@ -1,22 +1,13 @@
-spring:  # Configuración general del framework Spring Boot
+spring:
   application:
-    name: asignaturas-servicio  
-    # Nombre del microservicio. Este identificador se usará para:
-    # - Buscar el archivo de configuración en el config-server.
-    # - Registrarse con este nombre en el servidor Eureka (para descubrimiento de servicios).
-
+    name: asignaturas-servicio
   config:
-    import: optional:configserver:http://localhost:8888  
-    # Indica que este microservicio debe importar su configuración desde el config-server ubicado en la URL indicada.
-    # El prefijo "optional:" evita errores si el servidor de configuración no está disponible (útil en entornos de desarrollo).
-
-eureka:  # Configuración del cliente de Eureka
+    import: optional:configserver:http://localhost:8888
+eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka  
-      # Dirección del servidor Eureka. Aquí se registra este microservicio para que otros servicios lo puedan descubrir.
-    fetch-registry: true
-    register-with-eureka: true
+      defaultZone: http://eureka-server:8761/eureka
+
 
 server:
   port: 8081
@@ -31,6 +22,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure: DEBUG
 
 info:
   app:
