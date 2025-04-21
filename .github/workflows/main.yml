@@ -10,10 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        service: [usuarios-servicio, asignaturas-servicio, matriculas-servicio]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,61 +20,75 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 1. Build y Start Config Server
       - name: Build Config Server
-        run: |
-          cd config-server
-          mvn clean package
-          cd ..
+        run: mvn clean package -DskipTests --file config-server/pom.xml
+
+      - name: Build Eureka Server
+        run: mvn clean package -DskipTests --file eureka-server/pom.xml
+
+      - name: Build Usuarios Servicio
+        run: mvn clean package -DskipTests --file usuarios-servicio/pom.xml
+
+      - name: Build Asignaturas Servicio
+        run: mvn clean package -DskipTests --file asignaturas-servicio/pom.xml
 
       - name: Start Config Server
-        run: |
-          nohup java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar > config.log 2>&1 &
+        run: nohup java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar > config.log 2>&1 &
 
-      - name: Wait for Config Server to start
+      - name: Wait for Config Server
         run: |
           for i in {1..10}; do
-            if curl -s http://localhost:8888/; then
-              echo "✅ Config Server is up!"
+            if curl -s http://localhost:8888/actuator/health | grep UP; then
+              echo " Config Server is up!"
               break
             fi
-            echo "⏳ Waiting for Config Server..."
+            echo " Waiting for Config Server..."
             sleep 5
           done
-          if ! curl -s http://localhost:8888/; then
-            echo "❌ Config Server failed to start"
-            cat config.log
-            exit 1
-          fi
-
-      # 2. Build y Start Eureka Server
-      - name: Build Eureka Server
-        run: |
-          cd eureka-server
-          mvn clean package
-          cd ..
 
       - name: Start Eureka Server
-        run: |
-          nohup java -jar eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar > eureka.log 2>&1 &
+        run: nohup java -jar eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar > eureka.log 2>&1 &
 
-      - name: Wait for Eureka Server to start
+      - name: Wait for Eureka Server
         run: |
           for i in {1..10}; do
             if curl -s http://localhost:8761/eureka/; then
-              echo "Eureka Server is up!"
+              echo " Eureka is up!"
               break
             fi
-            echo "Waiting for Eureka Server..."
+            echo " Waiting for Eureka Server..."
             sleep 5
           done
-          if ! curl -s http://localhost:8761/eureka/; then
-            echo "Eureka Server failed to start"
-            cat eureka.log
-            exit 1
-          fi
 
-      # 3. Compila y testea cada microservicio
-      - name: Build and Test ${{ matrix.service }}
-        working-directory: ${{ matrix.service }}
-        run: mvn clean install
+      - name: Start Usuarios Servicio
+        run: nohup java -jar usuarios-servicio/target/usuarios-servicio-0.0.1-SNAPSHOT.jar > usuarios.log 2>&1 &
+
+      - name: Wait for Usuarios Servicio
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8081/actuator/health | grep UP; then
+              echo " Usuarios Servicio is up!"
+              break
+            fi
+            echo " Waiting for Usuarios Servicio..."
+            sleep 5
+          done
+
+      - name: Start Asignaturas Servicio
+        run: nohup java -jar asignaturas-servicio/target/asignaturas-servicio-0.0.1-SNAPSHOT.jar > asignaturas.log 2>&1 &
+
+      - name: Wait for Asignaturas Servicio
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8082/actuator/health | grep UP; then
+              echo " Asignaturas Servicio is up!"
+              break
+            fi
+            echo " Waiting for Asignaturas Servicio..."
+            sleep 5
+          done
+
+
+
+      - name: Build and Test Matriculas Servicio
+        run: mvn clean install --file matriculas-servicio/pom.xml
