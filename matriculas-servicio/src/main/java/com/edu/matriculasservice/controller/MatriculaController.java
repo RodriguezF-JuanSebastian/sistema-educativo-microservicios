@@ -1,7 +1,10 @@
 package com.edu.matriculasservice.controller;
 
+import com.edu.matriculasservice.dto.MatriculaResponseDto;
 import com.edu.matriculasservice.model.Matricula;
 import com.edu.matriculasservice.service.MatriculaService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +44,15 @@ public class MatriculaController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
         matriculaService.eliminar(id);
+    }
+
+    @GetMapping("/{id}/detalle")
+    public MatriculaResponseDto obtenerDetalle(@PathVariable Long id) {
+        return matriculaService.obtenerMatriculaConUsuario(id);
+    }
+
+    @GetMapping("/detalladas")
+    public ResponseEntity<List<MatriculaResponseDto>> obtenerMatriculasDetalladas() {
+    return ResponseEntity.ok(matriculaService.obtenerTodasConDetalle());
     }
 }

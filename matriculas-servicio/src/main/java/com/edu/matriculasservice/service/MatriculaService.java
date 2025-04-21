@@ -13,14 +13,17 @@
 //Indica que este archivo forma parte del paquete servicios del microservicio matriculasservice
 package com.edu.matriculasservice.service;
 
+import com.edu.matriculasservice.dto.MatriculaResponseDto;
 import com.edu.matriculasservice.model.Matricula;
 
 import java.util.List;
 
 public interface MatriculaService {
     List<Matricula> obtenerTodas();
+    List<MatriculaResponseDto> obtenerTodasConDetalle();
     Matricula guardar(Matricula matricula);
     Matricula obtenerPorId(Long id);
     void eliminar(Long id);
     void registrarMatricula(Long usuarioId);
+    MatriculaResponseDto obtenerMatriculaConUsuario(Long id);
 }
