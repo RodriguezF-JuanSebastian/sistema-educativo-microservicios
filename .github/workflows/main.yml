@@ -24,6 +24,34 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # 1. Build y Start Config Server
+      - name: Build Config Server
+        run: |
+          cd config-server
+          mvn clean package
+          cd ..
+
+      - name: Start Config Server
+        run: |
+          nohup java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar > config.log 2>&1 &
+
+      - name: Wait for Config Server to start
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8888/; then
+              echo "✅ Config Server is up!"
+              break
+            fi
+            echo "⏳ Waiting for Config Server..."
+            sleep 5
+          done
+          if ! curl -s http://localhost:8888/; then
+            echo "❌ Config Server failed to start"
+            cat config.log
+            exit 1
+          fi
+
+      # 2. Build y Start Eureka Server
       - name: Build Eureka Server
         run: |
           cd eureka-server
@@ -34,22 +62,23 @@ jobs:
         run: |
           nohup java -jar eureka-server/target/eureka-server-0.0.1-SNAPSHOT.jar > eureka.log 2>&1 &
 
-      - name: Wait for Eureka to start
+      - name: Wait for Eureka Server to start
         run: |
           for i in {1..10}; do
             if curl -s http://localhost:8761/eureka/; then
-              echo "Eureka is up!"
+              echo "Eureka Server is up!"
               break
             fi
-            echo "Waiting for Eureka..."
+            echo "Waiting for Eureka Server..."
             sleep 5
           done
           if ! curl -s http://localhost:8761/eureka/; then
-            echo "Eureka failed to start"
+            echo "Eureka Server failed to start"
             cat eureka.log
             exit 1
           fi
 
+      # 3. Compila y testea cada microservicio
       - name: Build and Test ${{ matrix.service }}
         working-directory: ${{ matrix.service }}
         run: mvn clean install
