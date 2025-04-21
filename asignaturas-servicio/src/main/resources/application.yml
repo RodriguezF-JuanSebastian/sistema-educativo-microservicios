@@ -1,8 +1,25 @@
 spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  profiles:
+    active: test
+
   application:
     name: asignaturas-servicio
   config:
     import: optional:configserver:http://localhost:8888
+
+
+
+
+
 eureka:
   client:
     service-url:
